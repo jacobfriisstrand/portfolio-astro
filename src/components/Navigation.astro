@@ -1,0 +1,86 @@
+---
+
+---
+<h1>This is the navigation</h1>
+<nav>
+<a href="#" aria-label="home">
+    <img class="logo" src="" alt="">
+</a>
+
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href=""><img class="svg linkedin" src="" alt=""></a></li>
+        <li><a href=""><img class="svg github" src="" alt=""></a></li>
+    </ul>
+</nav>
+
+
+
+
+<script>
+export async function navigationData() {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "08ea7024221413272431b8c2343512",
+    },
+    body: JSON.stringify({
+      query: `query MyQuery {
+  navigation {
+    logo {
+      url
+      alt
+    }
+  }
+}
+`,
+    }),
+  };
+
+ try {
+    const res = await fetch("https://graphql.datocms.com/", options);
+    const data = await res.json();
+    return data; // Return the data
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+// Call getHeroData and then showData when the data is available
+navigationData()
+  .then((data) => {
+    showNavigationData(data);
+  })
+  .catch((error) => {
+    // Handle errors here
+  });
+
+function showNavigationData(data) {
+const logo = document.querySelector(".logo");
+const linkedIn = document.querySelector(".linkedin");
+const gitHub = document.querySelector(".github");
+
+logo.src = data.data.navigation.logo.url;
+}
+</script>
+
+<style>
+    .logo {
+        width: var(--logo-size);
+    }
+
+    nav {
+        display: flex;
+        place-items: center;
+        justify-content: space-between;
+    }
+
+    nav ul {
+        display: flex;
+        gap: var(--space-m);
+    }
+</style>

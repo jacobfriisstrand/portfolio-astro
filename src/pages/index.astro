@@ -1,12 +1,28 @@
 ---
-import Hero from '../components/Hero.astro';
 import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro'
+import Hero from '../components/Hero.astro';
+import CurrentSkills from '../components/CurrentSkills.astro';
+import LearningSkills from '../components/LearningSkills.astro';
+import About from '../components/About.astro';
+import Work from '../components/Work.astro';
+import Contact from '../components/Contact.astro';
 ---
 
 <Layout title="Jacob Friis Strand | Front-end developer & designer">
+	<header>
+		<Navigation/>
+		<Hero/>
+	</header>
 	<main>
-<Hero/>
+		<CurrentSkills/>
+		<LearningSkills/>
+		<About/>
+		<Work/>
 	</main>
+	<footer>
+		<Contact/>
+	</footer>
 </Layout>
 
 <style>
