@@ -21,31 +21,227 @@ const { title } = Astro.props;
 	</body>
 </html>
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
+/* A more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  /* Resets default margins and paddings */
+  margin: 0;
+  padding: 0;
+
+  /* Remove built-in typography styles */
+  font: inherit;
+}
+
+html {
+  /* Bases color-scheme on user preference */
+  color-scheme: light dark;
+
+  /* Sets default line-height */
+  line-height: 1.5;
+}
+
+body {
+  /* Sets min-height on the body for mobile devices */
+  min-height: 100dvh;
+  min-height: 100svh;
+
+  /* Fallback for desktop */
+  min-height: 100vh;
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+input,
+label {
+  line-height: 1.1;
+}
+
+/* Makes images responsive */
+img,
+picture,
+video,
+canvas,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Balances headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p {
+  /* Sets the paragraph max-width to a readable length  */
+  max-width: 65ch;
+
+  /* Makes the text-wrap more aligned */
+  text-wrap: pretty;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Removes default button styling and adds a pointer cursor */
+button {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+/* Removes default list styling */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Removes default text styling from links */
+a {
+  text-decoration: none;
+  color: currentColor;
+}
+
+/* Font declaration */
+@font-face {
+  font-family: "display";
+  src: url(fonts/Gambarino-Regular.woff2);
+}
+
+@font-face {
+  font-family: "heading";
+  src: url(fonts/Switzer-Medium.woff2);
+}
+
+@font-face {
+  font-family: "body";
+  src: url(fonts/Switzer-Regular.woff2);
+}
+
+:root {
+  /* Spacing  */
+  --space-s: clamp(0.25rem, -0.0978rem + 1.7391vw, 1.25rem);
+  --space-m: clamp(0.5rem, -0.1957rem + 3.4783vw, 2.5rem);
+  --space-l: clamp(0.75rem, -0.2935rem + 5.2174vw, 3.75rem);
+  --space-xl: clamp(1rem, -0.3913rem + 6.9565vw, 5rem);
+  --space-2xl: clamp(1.25rem, -0.4891rem + 8.6957vw, 6.25rem);
+  --space-3xl: clamp(1.5rem, -0.587rem + 10.4348vw, 7.5rem);
+
+  /* Sizing  */
+  --round-border-radius: 1e5px;
+  --svg-size: clamp(3rem, 2.6667rem + 1.6667vw, 6rem);
+}
+
+/* Typography */
+:root {
+  --fs-small: clamp(1rem, 0.9909rem + 0.0455vw, 1.1rem);
+  --fs-body: clamp(1.125rem, 1.1023rem + 0.1136vw, 1.375rem);
+  --fs-h4: clamp(1.2656rem, 1.2244rem + 0.206vw, 1.7188rem);
+  --fs-h3: clamp(1.4238rem, 1.3578rem + 0.3295vw, 2.1488rem);
+  --fs-h2: clamp(1.6019rem, 1.5034rem + 0.4926vw, 2.6856rem);
+  --fs-h1: clamp(3rem, 2.6rem + 2vw, 5rem);
+}
+
+/* Color scheme for light(default) mode */
+:root {
+  --accent: hsl(1, 81%, 51%);
+  --dark-900: hsl(0, 0%, 8%);
+  --inverse: hsl(48, 81%, 51%);
+  --light-900: hsl(0, 0%, 99%);
+}
+
+/* Color scheme for dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: hsl(1, 81%, 51%);
+    --light-900: hsl(0, 0%, 99%);
+    --dark-900: hsl(0, 0%, 8%);
+    --inverse: hsl(0, 0%, 7%);
+  }
+}
+
+html {
+  background-color: var(--surface);
+  color: var(--text);
+}
+
+body {
+  font-size: var(--fs-body);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns:
+    [full-start] 1fr
+    [content] minmax(0, 1600px)
+    1fr [full-end];
+}
+
+header,
+main,
+footer {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: full;
+  align-content: start;
+
+  > * {
+    grid-column: content;
+  }
+}
+
+.full-bleed {
+  display: grid;
+  grid-column: full;
+  grid-template-columns: subgrid;
+
+  > * {
+    grid-column: content;
+  }
+}
+
+h1 {
+  font-family: "display";
+  font-size: var(--fs-h1);
+}
+
+h2 {
+  font-family: "heading";
+  font-size: var(--fs-h2);
+}
+
+h3 {
+  font-family: "heading";
+  font-size: var(--fs-h3);
+}
+
+h4 {
+  font-family: "heading";
+  font-size: var(--fs-h4);
+}
+h5 {
+  font-family: "heading";
+  font-size: var(--fs-h5);
+}
+
+p,
+a,
+li {
+  font-family: "body";
+}
 </style>
