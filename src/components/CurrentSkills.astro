@@ -45,28 +45,39 @@
 }
 
 .current-skill {
+  display: grid;
+  place-items: center;
+}
+
+.current-skill-img,
+.current-skill-name {
+    grid-area: 1/1;
+}
+
+.current-skill-name {
+    font-size: var(--fs-small);
+  font-style: italic;
+  max-width: min-content;
+    opacity: 0;
+  transition: all 150ms ease-in-out;
+  transform: scale(0);
   text-align: -webkit-center;
-  height: fit-content;
 }
 
 .current-skill:hover .current-skill-name {
   opacity: 1;
-  transform: translateY(0);
+  transform: scale(1);
+}
+
+.current-skill:hover .current-skill-img {
+    opacity: .3;
+      transition: all 150ms ease-in-out;
 }
 
 .scroller[data-animated="true"] .scroller__inner:is(:hover) {
   animation-play-state: paused;
 }
 
-.current-skill-name {
-  font-size: var(--fs-small);
-  font-style: italic;
-  margin-top: var(--space-s);
-  max-width: min-content;
-  opacity: 0;
-  transition: all 100ms ease-in;
-  transform: translateY(-5px);
-}
 
 .current-skill-img {
   height: var(--svg-size);
