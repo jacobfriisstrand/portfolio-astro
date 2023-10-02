@@ -1,1 +1,117 @@
-<h1>This is learning skills</h1>
+<h2>Currently learning</h2>
+<ul class="learn-skills-list"></ul>
+
+<template id="learning-skill-object">
+      <li class="learning-skill">
+        <img class="learning-skill-img" src="" alt="" />
+        <p class="learning-skill-name"></p>
+      </li>
+</template>
+
+<style>
+    h2 {
+        text-align: center;
+    }
+
+    .learning-skill-img {
+        width: calc(var(--svg-size) * 2);   
+          transition: all 150ms ease-in-out;
+    }
+
+    .learn-skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        place-items: center;
+        justify-content: center;
+        gap: var(--space-3xl);
+    }
+
+.learning-skill {
+  display: grid;
+  place-items: center;
+}
+
+.learning-skill-img,
+.learning-skill-name {
+    grid-area: 1/1;
+}
+
+.learning-skill-name {
+    font-size: var(--fs-h4);
+     opacity: 0;
+  transition: all 150ms ease-in-out;
+  transform: scale(0);
+    
+}
+
+.learning-skill:hover .learning-skill-name {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.learning-skill:hover .learning-skill-img {
+    opacity: .3;
+      transition: all 150ms ease-in-out;
+}
+
+</style>
+
+<script>
+
+export async function learnData() {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "08ea7024221413272431b8c2343512",
+    },
+    body: JSON.stringify({
+      query: `query MyQuery {
+  allAboutToLearns {
+    name
+    icon {
+      url
+      alt
+    }
+  }
+}`,
+    }),
+  };
+
+ try {
+    const res = await fetch("https://graphql.datocms.com/", options);
+    const data = await res.json();
+    return data; // Return the data
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+// Call getHeroData and then showData when the data is available
+learnData()
+  .then((data) => {
+    showLearnData(data);
+    // console.log(data);
+  })
+  .catch((error) => {
+    // Handle errors here
+  });
+
+
+  function showLearnData(learnSkillsData) {
+  learnSkillsData.data.allAboutToLearns.forEach((skill) => {
+    const learnSkillClone = document.querySelector("#learning-skill-object").content.cloneNode(true);
+    let learnSkillImage = learnSkillClone.querySelector(".learning-skill-img");
+    let learnSkillName = learnSkillClone.querySelector(".learning-skill-name");
+
+    learnSkillImage.src = skill.icon.url;
+    learnSkillName.textContent = skill.name;
+
+    document.querySelector(".learn-skills-list").appendChild(learnSkillClone);
+  });
+}
+
+
+
+</script>

@@ -1,1 +1,158 @@
-<h1>This is current skills</h1>
+<h2>Current Tech Stack</h2>
+
+<section class="skills">
+        <div class="scroller">
+          <ul id="current-skills-list" class="scroller__inner"></ul>
+        </div>
+</section>
+
+<template id="current-skill-object">
+      <li class="current-skill">
+        <img class="current-skill-img" src="" alt="" />
+        <p class="current-skill-name"></p>
+      </li>
+</template>
+
+<style>
+.scroller[data-animated="true"] {
+  -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+  mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+  overflow: hidden;
+  max-width: fit-content;
+  height: fit-content;
+}
+
+.scroller[data-animated="true"] .scroller__inner {
+  width: max-content;
+  flex-wrap: nowrap;
+  animation: scroll 20s linear infinite;
+  height: max-content;
+}
+
+.scroller__inner {
+  --scroll-item-gap: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--scroll-item-gap);
+  row-gap: var(--space-xl);
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(calc(-50% - var(--scroll-item-gap) / 2));
+  }
+}
+
+.current-skill {
+  text-align: -webkit-center;
+  height: fit-content;
+}
+
+.current-skill:hover .current-skill-name {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroller[data-animated="true"] .scroller__inner:is(:hover) {
+  animation-play-state: paused;
+}
+
+.current-skill-name {
+  font-size: var(--fs-small);
+  font-style: italic;
+  margin-top: var(--space-s);
+  max-width: min-content;
+  opacity: 0;
+  transition: all 100ms ease-in;
+  transform: translateY(-5px);
+}
+
+.current-skill-img {
+  height: var(--svg-size);
+  aspect-ratio: 1;
+}
+</style>
+
+<script>
+// Function to fetch data from the GraphQL API
+export async function getCurrentSkillsData() {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "08ea7024221413272431b8c2343512", // Replace with your actual access token
+    },
+    body: JSON.stringify({
+      query: `
+      query MyQuery {
+        allCurrentSkills {
+            icon {
+                url
+                alt
+            }
+            name
+            }
+        }
+`,
+    }),
+  };
+
+  try {
+    const res = await fetch("https://graphql.datocms.com/", options);
+    const data = await res.json();
+    return data; // Return the data
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+getCurrentSkillsData()
+  .then((currentSkillsData) => {
+    showCurrentSkillsData(currentSkillsData);
+    console.log("current skills data", currentSkillsData);
+    addInfiniteScrollAnimation();
+  })
+  .catch((error) => {
+    // Handle errors here
+  });
+
+  let currentSkillsList; 
+
+  function showCurrentSkillsData(currentSkillsData) {
+  currentSkillsData.data.allCurrentSkills.forEach((skill) => {
+    const currentSkillClone = document.querySelector("#current-skill-object").content.cloneNode(true);
+    let currentSkillImage = currentSkillClone.querySelector(".current-skill-img");
+    let currentSkillName = currentSkillClone.querySelector(".current-skill-name");
+
+    currentSkillImage.src = skill.icon.url;
+    currentSkillName.textContent = skill.name;
+
+    document.querySelector("#current-skills-list").appendChild(currentSkillClone);
+    currentSkillsList = Array.from(document.querySelector("#current-skills-list").children);
+  });
+}
+
+const scrollers = document.querySelectorAll(".scroller");
+
+// if statement that checks for users who DOES NOT have preferences on motion.
+if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+  addInfiniteScrollAnimation();
+}
+
+function addInfiniteScrollAnimation() {
+  scrollers.forEach((scroller) => {
+    const scrollerInner = scroller.querySelector(".scroller__inner");
+    scroller.setAttribute("data-animated", true);
+    // console.log(currentSkillsList);
+
+    currentSkillsList.forEach((item) => {
+      const duplicatedItem = item.cloneNode(true);
+      duplicatedItem.setAttribute("aria-hidden", true);
+      scrollerInner.appendChild(duplicatedItem);
+    });
+  });
+}
+
+</script>
