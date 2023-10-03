@@ -44,34 +44,31 @@
   }
 }
 
+
 .current-skill {
-  display: grid;
-  place-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-s);
 }
-
-.current-skill-img,
-.current-skill-name {
-    grid-area: 1/1;
-}
-
 .current-skill-name {
     font-size: var(--fs-small);
   font-style: italic;
   max-width: min-content;
     opacity: 0;
   transition: all 150ms ease-in-out;
-  transform: scale(0);
+  transform: translateY(-10px);
   text-align: -webkit-center;
 }
 
 .current-skill:hover .current-skill-name {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
 }
 
 .current-skill:hover .current-skill-img {
-    opacity: .3;
       transition: all 150ms ease-in-out;
+       filter: grayscale(0%);
 }
 
 .scroller[data-animated="true"] .scroller__inner:is(:hover) {
@@ -82,6 +79,7 @@
 .current-skill-img {
   height: var(--svg-size);
   aspect-ratio: 1;
+   filter: grayscale(100%);
 }
 </style>
 

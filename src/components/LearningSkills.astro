@@ -13,9 +13,19 @@
         text-align: center;
     }
 
+    .learning-skill {
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        gap: var(--space-s);
+
+    }
+
     .learning-skill-img {
         width: calc(var(--svg-size) * 2);   
+         filter: grayscale(100%);
           transition: all 150ms ease-in-out;
+          aspect-ratio: 1;
     }
 
     .learn-skills-list {
@@ -26,32 +36,23 @@
         gap: var(--space-3xl);
     }
 
-.learning-skill {
-  display: grid;
-  place-items: center;
-}
-
-.learning-skill-img,
-.learning-skill-name {
-    grid-area: 1/1;
-}
 
 .learning-skill-name {
     font-size: var(--fs-h4);
      opacity: 0;
   transition: all 150ms ease-in-out;
-  transform: scale(0);
+  transform: translateY(-10px);
     
 }
 
 .learning-skill:hover .learning-skill-name {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
 }
 
 .learning-skill:hover .learning-skill-img {
-    opacity: .3;
       transition: all 150ms ease-in-out;
+       filter: grayscale(0);
 }
 
 </style>
