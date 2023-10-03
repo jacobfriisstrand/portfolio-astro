@@ -231,6 +231,10 @@ h5 {
   font-size: var(--fs-h5);
 }
 
+p {
+  margin-bottom: var(--space-s);
+}
+
 p,
 a,
 li {
@@ -245,7 +249,7 @@ section a {
 }
 
 section {
-  padding-block: var(--space-xl);
+  padding-bottom: var(--space-xl);
 }
 
 .italic-span {
