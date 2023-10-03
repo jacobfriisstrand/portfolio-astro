@@ -1,5 +1,7 @@
-<h2>Currently learning</h2>
-<ul class="learn-skills-list"></ul>
+<section class="learning-skills">
+  <h2 class="skills-header">Currently learning</h2>
+  <ul class="learn-skills-list"></ul>
+</section>
 
 <template id="learning-skill-object">
       <li class="learning-skill">
@@ -113,6 +115,10 @@ learnData()
   });
 }
 
+
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 
 </script>

@@ -1,1 +1,95 @@
-<h2>This is the about me section</h2>
+<section id="about" class="about full-bleed">
+    <div class="about-wrapper">
+        <div class="about-content">
+            <h2 class="about-header"></h2>
+            <article class="about-text">
+            </article>
+        </div>
+        <img class="about-image" src="" alt="">
+    </div>
+</section>
+
+<style>
+    .about-wrapper {
+        display: grid;
+        grid-template-columns: var(--grid-column-responsive);
+        gap: var(--space-xl);
+    }
+</style>
+
+<script>
+export async function aboutData() {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "08ea7024221413272431b8c2343512",
+    },
+    body: JSON.stringify({
+      query:     `query MyQuery {
+  aboutMe {
+    aboutText
+    aboutTitle
+    aboutImage {
+      url
+      alt
+    }
+  }
+}`,
+    }),
+  };
+
+ try {
+    const res = await fetch("https://graphql.datocms.com/", options);
+    const data = await res.json();
+    return data; // Return the data
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+// Call getHeroData and then showData when the data is available
+aboutData()
+  .then((data) => {
+    showAboutData(data);
+    console.log(data);
+  })
+  .catch((error) => {
+    // Handle errors here
+  });
+
+function showAboutData(data) {
+const aboutHeader = document.querySelector(".about-header");
+const aboutText = document.querySelector(".about-text");
+const aboutImage = document.querySelector(".about-image");
+aboutHeader.textContent=data.data.aboutMe.aboutTitle;
+aboutText.innerHTML=data.data.aboutMe.aboutText;
+aboutImage.src = data.data.aboutMe.aboutImage.url;
+aboutImage.alt = data.data.aboutMe.aboutImage.alt;
+}
+
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
+
+gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
+gsap.to('.about', {
+  backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--dark-900'), // Target background color (end color)
+  color: getComputedStyle(document.documentElement).getPropertyValue('--light-900'), // Target text color (end color)
+  opacity: 1, // Ensure opacity is set to 1 (fully opaque)
+  duration: 1, // Duration of the fade-in animation
+  scrollTrigger: {
+    trigger: '.learn-skills-list',
+    start: "top 50%",
+    end: "bottom 50%", // Change this to your desired start position
+    scrub: true, // Smooth animation during scroll
+  },
+});
+
+
+
+
+});
+</script>

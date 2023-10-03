@@ -1,6 +1,6 @@
-<h2>Current Tech Stack</h2>
 
 <section class="skills">
+  <h2 class="skills-header">Current Tech Stack</h2>
         <div class="scroller">
           <ul id="current-skills-list" class="scroller__inner"></ul>
         </div>
@@ -49,6 +49,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* justify-content: space-between; */
     gap: var(--space-s);
 }
 .current-skill-name {
@@ -148,6 +149,9 @@ const scrollers = document.querySelectorAll(".scroller");
 // if statement that checks for users who DOES NOT have preferences on motion.
 if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
   addInfiniteScrollAnimation();
+
+
+  
 }
 
 function addInfiniteScrollAnimation() {
@@ -164,4 +168,6 @@ function addInfiniteScrollAnimation() {
   });
 }
 
+
+ 
 </script>

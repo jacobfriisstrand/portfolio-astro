@@ -13,6 +13,10 @@ html {
 
   /* Sets default line-height */
   line-height: 1.5;
+
+  /* Smooth scroll behaviour */
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--space-xl);
 }
 
 body {
@@ -115,6 +119,7 @@ a {
   --space-3xl: clamp(1.5rem, -0.587rem + 10.4348vw, 7.5rem);
 
   --nav-padding-block: 1rem;
+  --grid-column-responsive: repeat(auto-fit, minmax(320px, 1fr));
 
   /* Sizing  */
   --round-border-radius: 1e5px;
@@ -139,7 +144,7 @@ a {
 /* Color scheme for light(default) mode */
 :root {
   --accent: hsl(1, 81%, 51%);
-  --dark-900: hsl(0, 0%, 8%);
+  --dark-900: hsl(0, 0%, 5%);
   --inverse: hsl(48, 81%, 51%);
   --light-900: hsl(0, 0%, 99%);
 }
@@ -179,7 +184,6 @@ footer {
 
   > * {
     grid-column: content;
-    padding-inline: var(--space-s);
   }
 }
 
@@ -190,7 +194,6 @@ footer {
 
   > * {
     grid-column: content;
-    padding-inline: var(--space-s);
   }
 }
 
@@ -202,11 +205,16 @@ h1 {
 h2 {
   font-family: "heading";
   font-size: var(--fs-h2);
+  margin-bottom: var(--space-s);
 }
 
-h2 {
+article > h3 {
+  margin-block: var(--space-s);
+}
+
+.skills-header {
   text-align: center;
-  margin-block: var(--space-l);
+  margin-bottom: var(--space-l);
 }
 
 h3 {
@@ -234,6 +242,10 @@ section a {
   text-decoration: underline;
   text-decoration-color: var(--accent);
   text-underline-offset: 2px;
+}
+
+section {
+  padding-block: var(--space-xl);
 }
 
 .italic-span {

@@ -1,7 +1,7 @@
 ---
 import "../../public/styles/style.css"
 ---
-<nav class="full-bleed">
+<nav>
   <a href="#" aria-label="home">
       <img class="logo" src="../../public/icons/logo.svg" alt="Logo">
   </a>
@@ -77,6 +77,24 @@ const gitHubLink = document.querySelector(".github");
 linkedInLink.href = data.data.navigation.linkedinLink;
 gitHubLink.href = data.data.navigation.githubLink;
 }
+
+
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.to(".logo", {
+  rotation: 360, // Rotate 360 degrees (or any large value)
+  scrollTrigger: {
+    trigger: ".logo",
+    start: "top -100%", // Trigger when the top of the .logo element reaches the center of the viewport
+    end: "top 100%", // Trigger when the bottom of the viewport reaches the center of the .logo element
+    scrub: true,
+
+  },
+});
+
+
 </script>
 
 <style>

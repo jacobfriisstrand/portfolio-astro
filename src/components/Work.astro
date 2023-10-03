@@ -1,1 +1,25 @@
-<h2>This is the work section</h2>
+
+<section id="work" class="work full-bleed">
+    <h2>This is the work section</h2>
+    <div class="work-container">
+        <img src="https://images.unsplash.com/photo-1682686581218-82326951f4ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3570&q=80" alt="">
+        <img src="https://images.unsplash.com/photo-1695917642455-8ee7e1ce83db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2160&q=80" alt="">
+        <img src="https://images.unsplash.com/photo-1696168406453-69c0df659b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3570&q=80" alt="">
+        <img src="https://images.unsplash.com/photo-1695685502620-defef89b051f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3732&q=80" alt="">
+    </div>
+</section>
+
+<style>
+    img {
+        aspect-ratio: 1;
+        object-fit: cover;
+    }
+
+
+    .work-container {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(320px, 1fr));
+    }
+
+</style>
