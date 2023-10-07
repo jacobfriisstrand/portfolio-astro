@@ -1,25 +1,160 @@
 
 <section id="work" class="work full-bleed">
     <h2>This is the work section</h2>
-    <div class="work-container">
-        <img src="https://images.unsplash.com/photo-1682686581218-82326951f4ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3570&q=80" alt="">
-        <img src="https://images.unsplash.com/photo-1695917642455-8ee7e1ce83db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2160&q=80" alt="">
-        <img src="https://images.unsplash.com/photo-1696168406453-69c0df659b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3570&q=80" alt="">
-        <img src="https://images.unsplash.com/photo-1695685502620-defef89b051f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3732&q=80" alt="">
+    <div class="accordion">
+
     </div>
+
+    <template id="work-item">
+        <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">
+                <img class="accordion-image" src="" alt="">
+                <div class="accordion-image-content">
+                    <div class="accordion-image-content-container">
+                        <h4 class="accordion-title"></h4>
+                        <div class="accordion-pills">
+                            <p class="accordion-pill"></p>
+                        </div>
+                        <object data="../../public/icons/expand-icon.svg" type=""></object>
+                    </div>
+                </div>
+            </button>
+            <div class="accordion-content" aria-hidden="true">
+                <article class="accordion-text"></article>
+            </div>
+        </div>
+    </template>
 </section>
 
 <style>
-    img {
+    .accordion-image {
         aspect-ratio: 1;
         object-fit: cover;
+        opacity: .3;
     }
 
 
-    .work-container {
-  display: grid;
-  grid-template-columns:
-    repeat(auto-fit, minmax(320px, 1fr));
+    .accordion {
+        display: grid;
+        grid-template-columns:
+        repeat(auto-fit, minmax(320px, 1fr));
     }
 
+    .accordion-trigger {
+        display: grid;
+        align-items: end;
+    }
+
+    .accordion-image-content {
+      margin: 1rem;
+    }
+     
+    .accordion-image, .accordion-image-content {
+        grid-area: 1 / 1;
+    }
+
+
+    .accordion-pills {
+        display: flex;
+        flex-flow: wrap;
+        font-size: var(--fs-small);
+        gap: .3rem;
+    }
+    
+    .accordion-image-content-container {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+
+    .accordion-image-content-container object {
+      grid-column: 2;
+    }
+
+    .accordion-image-content-container .accordion-pills {
+      grid-column: 1;
+    }
+
+    .accordion-title {
+        text-align: left;
+    }
 </style>
+
+<script>
+    export async function getWorkData() {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "08ea7024221413272431b8c2343512", // Replace with your actual access token
+    },
+    body: JSON.stringify({
+      query: `query MyQuery {
+  allWorks {
+    workHeader
+    workHeroImage {
+      alt
+      url
+    }
+    workSkill {
+      skill
+    }
+    workText
+    workType
+  }
+}`,
+    }),
+  };
+
+  try {
+    const res = await fetch("https://graphql.datocms.com/", options);
+    const data = await res.json();
+    return data; // Return the data
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+getWorkData()
+  .then((workData) => {
+    showWorkData(workData);
+    console.log("work data", workData);
+    console.log(workData.data.allWorks);
+  })
+  .catch((error) => {
+    // Handle errors here
+  });
+
+
+function showWorkData(workData) {
+  workData.data.allWorks.forEach((project) => {
+    const workClone = document.querySelector("#work-item").content.cloneNode(true);
+
+    let workImage = workClone.querySelector(".accordion-image");
+    let workTitle = workClone.querySelector(".accordion-title");
+    let workText = workClone.querySelector(".accordion-text");
+    
+    workImage.src = project.workHeroImage.url;
+    workImage.alt = project.workHeroImage.alt;
+    workTitle.textContent = project.workHeader;
+    workText.innerHTML = project.workText;
+
+    let accordionPillsContainer = workClone.querySelector(".accordion-pills");
+
+    // Clear any existing content inside .accordion-pills div
+    accordionPillsContainer.innerHTML = "";
+
+    // Append each workSkill to the existing <p> elements with class .accordion-pill
+    project.workSkill.forEach((workSkill) => {
+      let pill = document.createElement("p");
+      pill.className = "accordion-pill";
+      pill.textContent = workSkill.skill;
+      accordionPillsContainer.appendChild(pill);
+    });
+
+    document.querySelector(".accordion").appendChild(workClone);
+  });
+}
+
+</script>

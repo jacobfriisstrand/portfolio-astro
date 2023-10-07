@@ -231,8 +231,14 @@ h5 {
   font-size: var(--fs-h5);
 }
 
-p {
+p:not(.accordion-pill) {
   margin-bottom: var(--space-s);
+}
+
+.accordion-pill {
+  border: 1px solid var(--dark-900);
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--round-border-radius);
 }
 
 p,
