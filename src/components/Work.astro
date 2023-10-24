@@ -1,6 +1,6 @@
 
 <section id="work" class="work full-bleed">
-    <h2>This is the work section</h2>
+    <h2>Work</h2>
     <div class="accordion">
 
     </div>
@@ -9,15 +9,13 @@
         <div class="accordion-item">
             <button class="accordion-trigger" aria-expanded="false">
                 <img class="accordion-image" src="" alt="">
-                <div class="accordion-image-content">
-                    <div class="accordion-image-content-container">
-                        <h4 class="accordion-title"></h4>
-                        <div class="accordion-pills">
-                            <p class="accordion-pill"></p>
-                        </div>
-                        <object data="../../public/icons/expand-icon.svg" type=""></object>
+                  <div class="title-and-trigger">
+                    <h4 class="accordion-title"></h4>
+                    <object class="accordion-trigger-icon" data="../../public/icons/expand-icon.svg" type=""></object>
+                  </div>
+                    <div class="accordion-pills">
+                      <p class="accordion-pill"></p>
                     </div>
-                </div>
             </button>
             <div class="accordion-content" aria-hidden="true">
                 <article class="accordion-text"></article>
@@ -27,57 +25,104 @@
 </section>
 
 <style>
+
     .accordion-image {
-        aspect-ratio: 1;
-        object-fit: cover;
-        opacity: .3;
+      aspect-ratio: 1;
+      object-fit: cover;
+      transition: var(--transition);
     }
 
+    .accordion-item:hover .accordion-image {
+      scale: .95;
+      transition: var(--transition);
+      box-shadow: 0 0 30px var(--inverse);
+      border-radius: 5px;
+      transition: var(--transition);
+    }
+
+
+    .accordion-trigger:focus .accordion-text {
+      color: red;
+    }
 
     .accordion {
-        display: grid;
-        grid-template-columns:
-        repeat(auto-fit, minmax(320px, 1fr));
-    }
-
-    .accordion-trigger {
-        display: grid;
-        align-items: end;
-    }
-
-    .accordion-image-content {
-      margin: 1rem;
-    }
-     
-    .accordion-image, .accordion-image-content {
-        grid-area: 1 / 1;
-    }
-
-
-    .accordion-pills {
-        display: flex;
-        flex-flow: wrap;
-        font-size: var(--fs-small);
-        gap: .3rem;
-    }
-    
-    .accordion-image-content-container {
       display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-    }
-
-    .accordion-image-content-container object {
-      grid-column: 2;
-    }
-
-    .accordion-image-content-container .accordion-pills {
-      grid-column: 1;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-s);
     }
 
     .accordion-title {
-        text-align: left;
+      text-align: left;
     }
+
+    .accordion-trigger {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+    }
+
+    .accordion-trigger-icon {
+        transition: var(--transition);
+    }
+
+
+
+    .accordion-item {
+    grid-row: auto / span 4;
+    display: grid;
+    grid-template-rows: subgrid;
+    transition: var(--transition);
+    row-gap: 0;
+    }
+
+    /* .accordion-image {
+    grid-row: 1 / -1;
+    grid-column: 1 / -1;
+    } */
+
+    .title-and-trigger {
+      display: flex;
+      place-items: baseline;
+      justify-content: space-between;
+      /* grid-row: 1;
+      grid-column: 1; */
+    }
+
+    .title-and-trigger, .accordion-pills {
+      padding-inline: .5rem;
+    }
+
+    .accordion-pills {
+      display: flex;
+      flex-flow: wrap;
+      font-size: var(--fs-small);
+      gap: .3rem;
+      /* grid-row: 2;
+      grid-column: 1; */
+    }
+
+    .accordion-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 500ms;
+    }
+
+    .accordion-text {
+      overflow: hidden;
+      padding-inline: .5rem;
+      padding-top: var(--space-s);
+    }
+
+    .accordion-content[aria-hidden="false"] {
+grid-template-rows: 1fr;
+    }
+
+
+    .accordion-trigger[aria-expanded="true"] .accordion-trigger-icon {
+  transform: rotate(45deg);
+  transition: var(--transition);
+}
+    
 </style>
 
 <script>
@@ -155,6 +200,36 @@ function showWorkData(workData) {
 
     document.querySelector(".accordion").appendChild(workClone);
   });
+}
+
+const accordion = document.querySelector(".accordion");
+
+accordion.addEventListener("click", (e) => {
+  const activePanel = e.target.closest(".accordion-item");
+  if (!activePanel) return;
+  toggleAccordion(activePanel);
+});
+
+function toggleAccordion(panelToActivate) {
+  const activeButton = panelToActivate.querySelector(".accordion-trigger");
+  const activePanel = panelToActivate.querySelector(".accordion-content");
+  const activePanelIsOpened = activeButton.getAttribute("aria-expanded");
+
+  if (activePanelIsOpened === "true") {
+    panelToActivate
+      .querySelector("button")
+      .setAttribute("aria-expanded", false);
+
+    panelToActivate
+      .querySelector(".accordion-content")
+      .setAttribute("aria-hidden", true);
+  } else {
+    panelToActivate.querySelector("button").setAttribute("aria-expanded", true);
+
+    panelToActivate
+      .querySelector(".accordion-content")
+      .setAttribute("aria-hidden", false);
+  }
 }
 
 </script>

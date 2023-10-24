@@ -1,25 +1,25 @@
 ---
 import "../../public/styles/style.css"
 ---
-<nav>
-  <a href="#" aria-label="home">
-      <img class="logo" src="../../public/icons/logo.svg" alt="Logo">
-  </a>
-      <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#work">Work</a></li>
-          <li class="contact"><a href="#contact">Contact</a></li>
-          <li>
-            <a class="linkedin" target="_blank" href="" aria-label="linkedin link">
-              <img class="svg" src="../../public/icons/linkedin.svg">
-            </a>
-          </li>
-          <li>
-            <a class="github" target="_blank" href="" aria-label="github link">
-              <img class="svg" src="../../public/icons/github.svg"></>
-            </a>
-          </li>
-      </ul>
+<nav class="full-bleed">
+    <a href="#" aria-label="home">
+        <img class="logo" src="../../public/icons/logo.svg" alt="Logo">
+    </a>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#work">Work</a></li>
+            <li class="contact"><a href="#contact">Contact</a></li>
+            <li>
+              <a class="linkedin" target="_blank" href="" aria-label="linkedin link">
+                <img class="svg" src="../../public/icons/linkedin.svg">
+              </a>
+            </li>
+            <li>
+              <a class="github" target="_blank" href="" aria-label="github link">
+                <img class="svg" src="../../public/icons/github.svg"></>
+              </a>
+            </li>
+        </ul>
 </nav>
 
 <script>
@@ -102,15 +102,14 @@ gsap.to(".logo", {
         width: var(--logo-size);
     }
 
-    nav {
+   nav {
         display: flex;
         place-items: center;
         justify-content: space-between;
         color: var(--light-900);
         background-color: rgba(0, 0, 0, .5);
-        padding-block: var(--nav-padding-block);
+        padding: var(--nav-padding-block);
         position: fixed;
-        top: 0;
         width: -webkit-fill-available;
         z-index: 999;
         backdrop-filter: blur(10px);

@@ -17,6 +17,8 @@
         place-items: center;
         padding-top: var(--space-xl);
     }
+
+
 </style>
 
 <script>
@@ -77,21 +79,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
-gsap.to('.about', {
-  backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--dark-900'), // Target background color (end color)
-  color: getComputedStyle(document.documentElement).getPropertyValue('--light-900'), // Target text color (end color)
-  opacity: 1, // Ensure opacity is set to 1 (fully opaque)
-  duration: 1, // Duration of the fade-in animation
-  scrollTrigger: {
-    trigger: '.learn-skills-list',
-    start: "top 50%",
-    end: "bottom 50%", // Change this to your desired start position
-    scrub: true, // Smooth animation during scroll
-  },
+  gsap.to('.about', {
+    backgroundColor: "var(--dark-900)",
+    color: "var(--light-900)",
+    opacity: 1,
+    duration: 5,
+    scrollTrigger: {
+      trigger: ".about", // Start at 50% of the .about element
+      end: "+=70%", // End halfway through the .about element
+      scrub: true,
+      // markers: true,
+    },
+  });
 });
 
-
-
-
-});
 </script>
