@@ -96,17 +96,17 @@ a {
 /* Font declaration */
 @font-face {
   font-family: "display";
-  src: url(fonts/Gambarino-Regular.woff2);
+  src: url(../fonts/Gambarino-Regular.woff2);
 }
 
 @font-face {
   font-family: "heading";
-  src: url(fonts/Switzer-Medium.woff2);
+  src: url(../fonts/Switzer-Medium.woff2);
 }
 
 @font-face {
   font-family: "body";
-  src: url(fonts/Switzer-Regular.woff2);
+  src: url(../fonts/Switzer-Regular.woff2);
 }
 
 :root {
