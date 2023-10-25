@@ -8,9 +8,6 @@
 }
 
 html {
-  /* Bases color-scheme on user preference */
-  color-scheme: light dark;
-
   /* Sets default line-height */
   line-height: 1.5;
 
