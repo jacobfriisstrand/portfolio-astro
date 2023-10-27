@@ -119,12 +119,14 @@ export async function getCurrentSkillsData() {
     throw error;
   }
 }
-
+const scrollers = document.querySelectorAll(".scroller");
 getCurrentSkillsData()
   .then((currentSkillsData) => {
     showCurrentSkillsData(currentSkillsData);
     // console.log("current skills data", currentSkillsData);
-    addInfiniteScrollAnimation();
+    if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+     addInfiniteScrollAnimation();
+    }
   })
   .catch((error) => {
     // Handle errors here
@@ -146,21 +148,19 @@ getCurrentSkillsData()
   });
 }
 
-const scrollers = document.querySelectorAll(".scroller");
+
 
 // if statement that checks for users who DOES NOT have preferences on motion.
-if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
-  addInfiniteScrollAnimation();
-
-
-  
+/* if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+  addInfiniteScrollAnimation();  
 }
-
+ */
 function addInfiniteScrollAnimation() {
+  
   scrollers.forEach((scroller) => {
     const scrollerInner = scroller.querySelector(".scroller__inner");
     scroller.setAttribute("data-animated", true);
-    // console.log(currentSkillsList);
+    console.log("currentSkillsList",currentSkillsList);
 
     currentSkillsList.forEach((item) => {
       const duplicatedItem = item.cloneNode(true);
@@ -168,6 +168,7 @@ function addInfiniteScrollAnimation() {
       scrollerInner.appendChild(duplicatedItem);
     });
   });
+  
 }
 
 
