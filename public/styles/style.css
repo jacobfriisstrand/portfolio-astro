@@ -202,7 +202,7 @@ h1 {
 h2 {
   font-family: "heading";
   font-size: var(--fs-h2);
-  margin-bottom: var(--space-s);
+  margin-bottom: var(--space-l);
 }
 
 article > h3 {
