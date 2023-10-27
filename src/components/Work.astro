@@ -40,15 +40,17 @@
       transition: var(--transition);
     }
 
+.accordion-item:hover .accordion-trigger-icon path{
+  fill: var(--accent);
+  transition: var(--transition);
+}
 
-    .accordion-trigger:focus .accordion-text {
-      color: red;
-    }
+
 
     .accordion {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: var(--space-s);
+      gap: var(--space-xl);
     }
 
     .accordion-title {
