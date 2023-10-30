@@ -120,10 +120,18 @@ gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
     }
 
     .hero-wrapper {
-     display: grid;
+     /* display: grid;
   
         grid-template-columns: var(--grid-column-responsive);
         gap: var(--space-3xl);
-        align-items: center;
+        align-items: center; */
+        display: flex;
+        place-items: center;
+    }
+
+    @media (width < 750px) {
+      .hero-wrapper {
+        flex-direction: column;
+      }
     }
 </style>
